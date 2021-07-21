@@ -331,6 +331,31 @@ SharedPreferences.prototype.put = function(key, aValue, aSuccessCallback, aError
 }
 
 /**
+ * Retrieves all keys/value pairs from the preferences.
+ *
+ * @param {Function} [successCallback] A callback which is called if the operation is completed
+ * successfully. Invoked with `(keys)`.
+ * @param {Function} [errorCallback] A callback which is called if an error occurs.
+ * Invoked with `(err)`.
+ */
+SharedPreferences.prototype.getAll = function(successCallback, aErrorCallback) {
+    var errorCallback = aErrorCallback || noop
+
+    if (!isFunction(successCallback)) {
+        throw new TypeError("Missing or invalid argument, 'successCallback'. Function expected.")
+    }
+
+    if (!isFunction(errorCallback)) {
+        throw new TypeError("Invalid argument, 'errorCallback'. Function expected.")
+    }
+
+    var onError = function(errMessage) {
+        errorCallback(toError(errMessage))
+    }
+    exec(successCallback, onError, SERVICE, 'getAll', [this.name])
+}
+
+/**
  * Removes a value from the preferences.
  *
  * @param {String} key The name of the preference to remove.
