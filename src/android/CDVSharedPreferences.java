@@ -1,15 +1,17 @@
 package com.adrianodigiovanni.sharedpreferences;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.Map;
 import java.util.Set;
 
 public class CDVSharedPreferences extends CordovaPlugin {
@@ -189,6 +191,26 @@ public class CDVSharedPreferences extends CordovaPlugin {
             return true;
         }
 
+        if (action.equals("getAll")) {
+            cordova.getThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String name = args.getString(NAME);
+
+                        Map<String, ?> all = getSharedPreferences(name).getAll();
+                        JSONObject message = new JSONObject(all);
+
+                        callbackContext.success(message);
+                    } catch (Exception e) {
+                        callbackContext.error(e.getMessage());
+                    }
+                }
+            });
+
+            return true;
+        }
+
         if (action.equals("del")) {
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
@@ -292,7 +314,7 @@ public class CDVSharedPreferences extends CordovaPlugin {
         int mode = Activity.MODE_PRIVATE;
 
         if (name.equals("")) {
-            return activity.getPreferences(mode);
+            return PreferenceManager.getDefaultSharedPreferences(cordova.getContext());
         }
 
         return activity.getSharedPreferences(name, mode);
