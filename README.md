@@ -9,6 +9,7 @@ This plugin uses [SharedPreferences](https://developer.android.com/reference/and
 ### Highlights
 
 * save and retrieve key-value pairs of any Javascript data type using JSON serialization and parsing with `.put()` and `.get()`;
+* get all key-value pairs of any Javascript data type using `getAll()`;
 * also save and retrieve key-value pairs of booleans, numbers and strings mapping to native data types with `.putBoolean()`, `.getBoolean()`, `.putNumber()`, `.getNumber()`, `.putString()`, `.getString()`;
 * fallback to user-defined default value if the key doesn't exist;
 * manage multiple sets of preferences;
@@ -116,6 +117,7 @@ sharedPreferences.del(key, successCallback, errorCallback)
             * [.putString(key, value, [successCallback], [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+putString)
             * [.get(key, [defaultValue], successCallback, [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+get)
             * [.put(key, value, [successCallback], [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+put)
+            * [.getAll(successCallback, [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+getAll)
             * [.del(key, [successCallback], [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+del)
             * [.has(key, successCallback, [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+has)
             * [.keys(successCallback, [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+keys)
@@ -147,6 +149,7 @@ Returns a SharedPreferences instance
     * [.putString(key, value, [successCallback], [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+putString)
     * [.get(key, [defaultValue], successCallback, [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+get)
     * [.put(key, value, [successCallback], [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+put)
+    * [.getAll(successCallback, [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+getAll)
     * [.del(key, [successCallback], [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+del)
     * [.has(key, successCallback, [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+has)
     * [.keys(successCallback, [errorCallback])](#window.plugins.module_SharedPreferences..SharedPreferences+keys)
@@ -396,6 +399,18 @@ Sets a value in the preferences using JSON serialization.
 | key | <code>String</code> | The name of the preference to set. |
 | value |  | The new value for the preference. |
 | [successCallback] | <code>function</code> | A callback which is called if the operation is completed successfully. Invoked with `()`. |
+| [errorCallback] | <code>function</code> | A callback which is called if an error occurs. Invoked with `(err)`. |
+
+<a name="window.plugins.module_SharedPreferences..SharedPreferences+getAll"></a>
+
+#### sharedPreferences.getAll(successCallback, [errorCallback])
+Retrieves all key/value pairs from the preferences.
+
+**Kind**: instance method of [<code>SharedPreferences</code>](#window.plugins.module_SharedPreferences..SharedPreferences)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| successCallback | <code>function</code> | A callback which is called if the operation is completed successfully. Invoked with `(values)`. |
 | [errorCallback] | <code>function</code> | A callback which is called if an error occurs. Invoked with `(err)`. |
 
 <a name="window.plugins.module_SharedPreferences..SharedPreferences+del"></a>
