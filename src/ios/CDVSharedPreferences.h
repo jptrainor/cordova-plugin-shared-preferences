@@ -10,5 +10,6 @@
 -(void)del:(CDVInvokedUrlCommand *)command;
 -(void)has:(CDVInvokedUrlCommand *)command;
 -(void)keys:(CDVInvokedUrlCommand *)command;
+-(void)getAll:(CDVInvokedUrlCommand *)command;
 -(void)clear:(CDVInvokedUrlCommand *)command;
 @end

@@ -207,6 +207,21 @@ static NSString* const kErrorMessageFailedToWrite = @"Failed to write";
     }];
 }
 
+-(void)getAll:(CDVInvokedUrlCommand *)command
+{
+    [self.commandDelegate runInBackground:^{
+        NSArray* args = command.arguments;
+        NSString* name = [args objectAtIndex:kArgumentIndexName];
+        
+        NSUserDefaults* sharedPreferences = [self sharedPreferencesWithName:name];
+        
+        NSDictionary* values = [sharedPreferences dictionaryRepresentation];
+        
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:values];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
+}
+
 -(void)clear:(CDVInvokedUrlCommand *)command
 {
     [self.commandDelegate runInBackground:^{
