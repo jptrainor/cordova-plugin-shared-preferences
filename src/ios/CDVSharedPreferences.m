@@ -215,9 +215,17 @@ static NSString* const kErrorMessageFailedToWrite = @"Failed to write";
         
         NSUserDefaults* sharedPreferences = [self sharedPreferencesWithName:name];
         
-        NSDictionary* values = [sharedPreferences dictionaryRepresentation];
+        NSDictionary* dict = [sharedPreferences dictionaryRepresentation];
+        NSDictionary *matches = [[NSMutableDictionary alloc] init];
+
+        for(id key in dict) {
+            NSObject* obj = [dict objectForKey:key];
+            if ( ([obj isKindOfClass:[NSString class]]) || ([obj isKindOfClass:[NSNumber class]]) ) {
+                [matches setValue:obj forKey:key];
+            }
+        }
         
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:values];
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:matches];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
 }
